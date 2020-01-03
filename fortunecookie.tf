@@ -16,9 +16,6 @@ resource "aws_instance" "fortunecookie_base" {
   }
 }
 
-
-
-
 terraform {
   backend "s3" {
   bucket="myterraformcode"
