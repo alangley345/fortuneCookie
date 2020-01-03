@@ -11,7 +11,11 @@ resource "aws_instance" "fortunecookie_base" {
   associate_public_ip_address = "true"
   key_name = "fortuneCookie"
   
+  provisioner "local-exec" {
+    command = "echo The server's IP address is ${self.private_ip}"
+  }
 }
+
 
 
 
