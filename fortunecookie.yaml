@@ -1,0 +1,10 @@
+---
+- hosts: aws
+  become: yes
+  gather_facts: no
+
+#run terraform file for instance
+- terraform:
+    project_path: "~/Github/fortunecookie/fortunecookie.tf"
+    state: present
+---
