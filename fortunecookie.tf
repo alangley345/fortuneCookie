@@ -166,17 +166,21 @@ resource "aws_security_group" "fortunecookie" {
 
 #creates base for building out web app
 resource "aws_instance" "fortunecookie" {
-  ami           = "ami-00068cd7555f543d5"
-  instance_type = "t2.micro"
+  ami                         = "ami-00068cd7555f543d5"
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.fortunecookie.id
+  vpc_security_group_ids      = [aws_security_group.fortunecookie.id]
   associate_public_ip_address = "true"
-  key_name = "x1Carbon"
+  key_name                    = "fortuneCookie"
   
-  provisioner "local-exec" {
-    command  = "sleep 60" 
+  provisioner "remote-exec" {
+    connection {
+      type     = "ssh"
+      user     = "ec2-user"
+      host_key = "/home/aaron/.ssh/fortunecookie.pem"
+      host     = "aws.instance.fortunecookie.public_ip"
   }
-
-  provisioner "local-exec" {
-    command  = "sudo systemctl start nginx" 
+    inline  = ["sleep 30", "sudo systemctl start nginx" ]
   }
 }
 
