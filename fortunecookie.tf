@@ -18,14 +18,14 @@ resource "aws_default_network_acl" "fortunecookie" {
 
   #egress rules
   egress {
-    rule_no = 100
-    protocol = "icmp"
-    from_port = -1
-    to_port   = -1
-    icmp_type = -1
-    icmp_code = -1
+    rule_no    = 100
+    protocol   = "icmp"
+    from_port  = -1
+    to_port    = -1
+    icmp_type  = -1
+    icmp_code  = -1
     cidr_block = "0.0.0.0/0"
-    action = "allow"
+    action     = "allow"
   }
 
   egress {
@@ -39,14 +39,14 @@ resource "aws_default_network_acl" "fortunecookie" {
 
   #ingress rule
   ingress {
-    rule_no = 100
-    protocol = "icmp"
-    from_port = -1
-    to_port   = -1
-    icmp_type = -1
-    icmp_code = -1
+    rule_no    = 100
+    protocol   = "icmp"
+    from_port  = -1
+    to_port    = -1
+    icmp_type  = -1
+    icmp_code  = -1
     cidr_block = "0.0.0.0/0"
-    action = "allow"
+    action     = "allow"
   }
 
 
@@ -108,8 +108,8 @@ resource "aws_eip" "fortunecookie" {
 
 #create route table for VPC
 resource "aws_route_table" "fortunecookie" {
-  vpc_id = aws_vpc.fortunecookie.id
-  depends_on   = [aws_internet_gateway.fortunecookie, aws_vpc.fortunecookie]
+  vpc_id     = aws_vpc.fortunecookie.id
+  depends_on = [aws_internet_gateway.fortunecookie, aws_vpc.fortunecookie]
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.fortunecookie.id
@@ -131,8 +131,8 @@ resource "aws_security_group" "fortunecookie" {
   name        = "Fortune Cookie"
   description = "Allow Web Traffic to Fortune Cookie"
   vpc_id      = aws_vpc.fortunecookie.id
-  depends_on = [aws_internet_gateway.fortunecookie]
-  
+  depends_on  = [aws_internet_gateway.fortunecookie]
+
   # SSH from all
   ingress {
     from_port   = 22
@@ -140,7 +140,7 @@ resource "aws_security_group" "fortunecookie" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   ingress {
     from_port   = 80
     to_port     = 80
@@ -173,21 +173,22 @@ resource "aws_instance" "fortunecookie" {
   associate_public_ip_address = "true"
   key_name                    = "fortuneCookie"
   
+  connection {
+      type  = "ssh"
+      user  = "ec2-user"
+      private_key = file("/home/aaron/.ssh/fortuneCookie.pem")
+      host        = aws_instance.fortunecookie.public_ip
+    }
+  
   provisioner "remote-exec" {
-    connection {
-      type     = "ssh"
-      user     = "ec2-user"
-      host_key = "/home/aaron/.ssh/fortunecookie.pem"
-      host     = "aws.instance.fortunecookie.public_ip"
-  }
-    inline  = ["sleep 30", "sudo systemctl start nginx" ]
+    inline = ["sleep 30", "sudo systemctl start nginx"]
   }
 }
 
 terraform {
   backend "s3" {
-    bucket="myterraformcode"
-    key="fortunecookie/terraform.tfstate"
-    region="us-east-1"  
+    bucket = "myterraformcode"
+    key    = "fortunecookie/terraform.tfstate"
+    region = "us-east-1"
   }
 }
