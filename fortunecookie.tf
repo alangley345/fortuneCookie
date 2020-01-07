@@ -3,6 +3,16 @@ provider "aws" {
   region  = "us-east-1"
 }
 
+data "aws_ami" "fortunecookie" {
+  owners           = ["self"]
+  most_recent      = true
+
+  filter {
+    name = "name"
+    values =["fortunecookie *"]
+  }
+}
+
 #creates fortune cookie VPC
 resource "aws_vpc" "fortunecookie" {
   cidr_block       = "172.16.0.0/24"
@@ -163,14 +173,10 @@ resource "aws_security_group" "fortunecookie" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-#ip output
-output "ip" {
-  value = aws_instance.fortunecookie.public_ip
-}
 
 #creates base for building out web app
 resource "aws_instance" "fortunecookie" {
-  ami                         = "ami-00068cd7555f543d5"
+  ami                         = data.aws_ami.fortunecookie.id
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.fortunecookie.id
   vpc_security_group_ids      = [aws_security_group.fortunecookie.id]
