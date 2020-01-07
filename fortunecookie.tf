@@ -59,19 +59,9 @@ resource "aws_default_network_acl" "fortunecookie" {
     action     = "allow"
   }
 
-
   ingress {
     protocol   = "tcp"
     rule_no    = 150
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 22
-    to_port    = 22
-  }
-
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 200
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 80
@@ -80,7 +70,7 @@ resource "aws_default_network_acl" "fortunecookie" {
 
   ingress {
     protocol   = "tcp"
-    rule_no    = 250
+    rule_no    = 200
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 443
@@ -144,12 +134,6 @@ resource "aws_security_group" "fortunecookie" {
   depends_on  = [aws_internet_gateway.fortunecookie]
 
   # SSH from all
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   ingress {
     from_port   = 80
