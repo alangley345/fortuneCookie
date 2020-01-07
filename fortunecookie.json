@@ -12,15 +12,8 @@
  
 "provisioners": [
     {
-      "type": "shell",
-      "inline": [
-        "echo ENABLE NGINX",
-        "sudo amazon-linux-extras enable nginx1.12",
-        "echo INSTALL NGINX",
-        "sudo yum -y install nginx",
-        "echo START NGINX",
-        "sudo systemctl start nginx"
-      ]
+      "type": "ansible",
+      "playbook_file": "fortunecookie.yml"
     }
 ]
 }
