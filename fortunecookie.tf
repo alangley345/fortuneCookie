@@ -163,6 +163,10 @@ resource "aws_security_group" "fortunecookie" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+#ip output
+output "ip" {
+  value = aws_instance.fortunecookie.public_ip
+}
 
 #creates base for building out web app
 resource "aws_instance" "fortunecookie" {
@@ -172,19 +176,9 @@ resource "aws_instance" "fortunecookie" {
   vpc_security_group_ids      = [aws_security_group.fortunecookie.id]
   associate_public_ip_address = "true"
   key_name                    = "fortuneCookie"
-  
-  connection {
-      type  = "ssh"
-      user  = "ec2-user"
-      private_key = file("/home/aaron/.ssh/fortuneCookie.pem")
-      host        = aws_instance.fortunecookie.public_ip
-    }
-  
-  provisioner "remote-exec" {
-    inline = ["sleep 30", "sudo systemctl start nginx"]
-  }
 }
 
+#define location of state file
 terraform {
   backend "s3" {
     bucket = "myterraformcode"
