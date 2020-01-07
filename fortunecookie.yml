@@ -1,0 +1,30 @@
+---
+
+- hosts: all
+    tasks:
+     
+    - name: upgrade all yum packages for ansible
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: latest
+
+    - name: Create web-root directory
+      file:
+        path: /var/www/
+       state: directory
+
+-   name: Upload index.html and images
+    template:
+      src: website
+      dest: /var/www/
+
+-   name: restart nginx
+    service:
+      name: nginx
+      state: restarted
+      enabled: yes
