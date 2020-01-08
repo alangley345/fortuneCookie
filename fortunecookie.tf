@@ -80,15 +80,26 @@ resource "aws_default_network_acl" "fortunecookie" {
 }
 
 
-#Subnet for edge devices
-resource "aws_subnet" "fortunecookie" {
+#Subnet for fortune cookie 1
+resource "aws_subnet" "fortunecookie1" {
   vpc_id     = aws_vpc.fortunecookie.id
-  cidr_block = "172.16.0.0/24"
+  cidr_block = "172.16.0.0/25"
   depends_on = [aws_vpc.fortunecookie]
   tags = {
     Name = "Fortune Cookie"
   }
 }
+
+#Subnet for fortune cookie 2
+resource "aws_subnet" "fortunecookie2" {
+  vpc_id     = aws_vpc.fortunecookie.id
+  cidr_block = "172.16.0.128/25"
+  depends_on = [aws_vpc.fortunecookie]
+  tags = {
+    Name = "Fortune Cookie"
+  }
+}
+
 
 #Internet gateway for Fortune Cookie VPC
 resource "aws_internet_gateway" "fortunecookie" {
@@ -159,15 +170,30 @@ resource "aws_security_group" "fortunecookie" {
 }
 
 #creates base for building out web app
-resource "aws_instance" "fortunecookie" {
+resource "aws_launch_configuration" "fortunecookie" {
   ami                         = data.aws_ami.fortunecookie.id
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.fortunecookie.id
-  vpc_security_group_ids      = [aws_security_group.fortunecookie.id]
-  associate_public_ip_address = "true"
+  security_groups             = [aws_security_group.fortunecookie.id]
   key_name                    = "fortuneCookie"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
+resource "aws_autoscaling_group" "fortunecookie" {
+  name       = "fortunecookie autoscaling group"
+  max_size   = "2"
+  min_size   = "2"
+  health_check_grace_period = 300
+  health_check_type         = "ELB"
+  desired_capacity          = 4
+  force_delete              = true
+  launch_configuration      = aws_launch_configuration.fortunecookie
+  vpc_zone_identifier       = [aws_subnet.fortunecookie1.id, aws_subnet.fortunecookie2.id]
+
+}
 #define location of state file
 terraform {
   backend "s3" {
