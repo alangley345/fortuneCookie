@@ -3,15 +3,33 @@
 - hosts: all
   become: yes
   tasks:
-    - name: upgrade all yum packages for ansible
+    - name: Ppgrade all yum packages for ansible
       yum:
         name: "*"
         state: latest
 
-    - name: Enable amazon-linux-extras packages
-       shell: "amazon-linux-extras enable nginx1.12"
+    - name: Install nginx from amazon extrasa
+      shell: "amazon-linux-extras install nginx1.12"
+      become: yes
 
-    - name: restart nginx
+    - name: Install Git
+      yum:
+        name: git
+        state: latest
+
+    - name: Clone Fortune Cookie repo
+      shell: "git clone https://github.com/alangley345/fortuneCookie.git /opt/fortunecookie"
+      become: yes
+    
+    - name: Move nginx.conf
+      shell: "mv /opt/fortunecookie/nginx.conf /etc/nginx/nginx.conf"
+      become: yes
+
+    - name: Move nginx.conf
+      shell: "mkdir /var/www && mv /opt/fortunecookie/website /var/www/"
+      become: yes
+
+    - name: Restart nginx
       service:
         name: nginx
         state: restarted
