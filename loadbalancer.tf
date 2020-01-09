@@ -36,7 +36,10 @@ resource "aws_alb_listener" "fortunecookie" {
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = data.aws_acm_certificate.myaws.arn
-  default_action 
+  default_action {
+      target_group_arn = aws_alb_target_group.fortunecookie.arn
+      type             = "forward"
+  }
 }
 
 #specify listener rules
@@ -51,7 +54,7 @@ resource "aws_alb_listener_rule" "listener_rule" {
 
    condition {
     host_header {
-      values = ["*.myaws.greatcatlab.nets"]
+      values = ["*.elb.amazonaws.com"]
     }
   }
 }

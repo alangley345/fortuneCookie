@@ -1,15 +1,10 @@
-provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
-}
-
 data "aws_ami" "fortunecookie" {
-  owners           = ["self"]
-  most_recent      = true
+  owners      = ["self"]
+  most_recent = true
 
   filter {
-    name = "name"
-    values =["fortunecookie *"]
+    name   = "name"
+    values = ["fortunecookie *"]
   }
 }
 
@@ -82,9 +77,10 @@ resource "aws_default_network_acl" "fortunecookie" {
 
 #Subnet for fortune cookie 1
 resource "aws_subnet" "fortunecookie1" {
-  vpc_id     = aws_vpc.fortunecookie.id
-  cidr_block = "172.16.0.0/25"
-  depends_on = [aws_vpc.fortunecookie]
+  vpc_id            = aws_vpc.fortunecookie.id
+  cidr_block        = "172.16.0.0/25"
+  depends_on        = [aws_vpc.fortunecookie]
+  availability_zone = "us-east-1a"
   tags = {
     Name = "Fortune Cookie"
   }
@@ -92,9 +88,10 @@ resource "aws_subnet" "fortunecookie1" {
 
 #Subnet for fortune cookie 2
 resource "aws_subnet" "fortunecookie2" {
-  vpc_id     = aws_vpc.fortunecookie.id
-  cidr_block = "172.16.0.128/25"
-  depends_on = [aws_vpc.fortunecookie]
+  vpc_id            = aws_vpc.fortunecookie.id
+  cidr_block        = "172.16.0.128/25"
+  depends_on        = [aws_vpc.fortunecookie]
+  availability_zone = "us-east-1b"
   tags = {
     Name = "Fortune Cookie"
   }
@@ -108,13 +105,6 @@ resource "aws_internet_gateway" "fortunecookie" {
   tags = {
     Name = "Fortune Cookie"
   }
-}
-
-#creating aws_eip
-resource "aws_eip" "fortunecookie" {
-  instance   = aws_instance.fortunecookie.id
-  depends_on = [aws_internet_gateway.fortunecookie, aws_instance.fortunecookie]
-  vpc        = true
 }
 
 #create route table for VPC
@@ -171,34 +161,26 @@ resource "aws_security_group" "fortunecookie" {
 
 #creates base for building out web app
 resource "aws_launch_configuration" "fortunecookie" {
-  ami                         = data.aws_ami.fortunecookie.id
-  instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.fortunecookie.id
-  security_groups             = [aws_security_group.fortunecookie.id]
-  key_name                    = "fortuneCookie"
+  image_id        = data.aws_ami.fortunecookie.id
+  instance_type   = "t2.micro"
+  security_groups = [aws_security_group.fortunecookie.id]
+  key_name        = "fortuneCookie"
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
+#creates autoscaling group for fortunecookie site
 resource "aws_autoscaling_group" "fortunecookie" {
-  name       = "fortunecookie autoscaling group"
-  max_size   = "2"
-  min_size   = "2"
+  name                      = "fortunecookie autoscaling group"
+  max_size                  = "2"
+  min_size                  = "1"
   health_check_grace_period = 300
   health_check_type         = "ELB"
-  desired_capacity          = 4
+  desired_capacity          = 1
   force_delete              = true
-  launch_configuration      = aws_launch_configuration.fortunecookie
+  launch_configuration      = aws_launch_configuration.fortunecookie.id
   vpc_zone_identifier       = [aws_subnet.fortunecookie1.id, aws_subnet.fortunecookie2.id]
+}
 
-}
-#define location of state file
-terraform {
-  backend "s3" {
-    bucket = "myterraformcode"
-    key    = "fortunecookie/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
