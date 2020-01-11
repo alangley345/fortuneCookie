@@ -30,7 +30,19 @@ resource "aws_default_network_acl" "fortunecookie" {
     icmp_type  = -1
     icmp_code  = -1
     cidr_block = "0.0.0.0/0"
-    action     = "allow"
+    action     = "allow"redirect {
+      port        = 80
+      protocol    = "tcp"
+      status_code =  "HTTP_301"   
+      } 
+  }
+
+   condition {
+    http_header {
+      http_header_name = "X-Forwarded_For"
+      values           = ["172.16.0.*"]
+    }
+  }
   }
 
   egress {

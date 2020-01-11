@@ -4,6 +4,16 @@ resource "aws_alb_target_group" "fortunecookie" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.fortunecookie.id
+
+  health_check {
+    interval            = 30
+    path                = "/etc"
+    protocol            = "HTTP"
+    timeout             = 5
+    healthy_threshold   = 5
+    unhealthy_threshold = 2
+    matcher             = "200-299"
+  }
 }
 
 #creating network load balancer
@@ -25,7 +35,7 @@ resource "aws_autoscaling_attachment" "fortunecookie" {
 
 # Find a certificate that is issued
 data "aws_acm_certificate" "myaws" {
-  domain   = "*.myaws.greatcatlab.net"
+  domain   = "*.greatcatlab.net"
   statuses = ["ISSUED"]
 }
 
@@ -42,19 +52,39 @@ resource "aws_alb_listener" "fortunecookie" {
   }
 }
 
+resource "aws_alb_listener" "fortunecookie" {
+  load_balancer_arn = aws_alb.fortunecookie.arn
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
+    type            = "redirect"
+    redirect {
+      port          = "443"
+      protocol      = "HTTPS"
+      status_code   = "HTTP_301"
+    }
+  }
+}
+
+
 #specify listener rules
 resource "aws_alb_listener_rule" "listener_rule" {
   depends_on   = [aws_alb_target_group.fortunecookie]  
   listener_arn = aws_alb_listener.fortunecookie.arn  
   
   action {    
-    type             = "forward"    
-    target_group_arn = aws_alb_target_group.fortunecookie.id 
+    type             = "redirect"    
+    redirect {
+      port        = 80
+      protocol    = "tcp"
+      status_code =  "HTTP_301"   
+      } 
   }
 
    condition {
-    host_header {
-      values = ["*.elb.amazonaws.com"]
+    http_header {
+      http_header_name = "X-Forwarded_For"
+      values           = ["172.16.0.*"]
     }
   }
 }
