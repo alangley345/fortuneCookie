@@ -40,51 +40,33 @@ data "aws_acm_certificate" "myaws" {
 }
 
 #specify listener
-resource "aws_alb_listener" "fortunecookie" {
+resource "aws_alb_listener" "fc-frontend-443" {
   load_balancer_arn = aws_alb.fortunecookie.arn
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = data.aws_acm_certificate.myaws.arn
   default_action {
-      target_group_arn = aws_alb_target_group.fortunecookie.arn
-      type             = "forward"
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.fortunecookie.arn
+    
   }
 }
 
-resource "aws_alb_listener" "fortunecookie" {
+resource "aws_alb_listener" "fc-frontend-80" {
   load_balancer_arn = aws_alb.fortunecookie.arn
   port              = "80"
   protocol          = "HTTP"
   default_action {
+    order           = 1
     type            = "redirect"
     redirect {
+      host          = "#{host}"
+      path          = "/#{path}"
+      query         = "#{query}"
       port          = "443"
       protocol      = "HTTPS"
       status_code   = "HTTP_301"
-    }
-  }
-}
-
-
-#specify listener rules
-resource "aws_alb_listener_rule" "listener_rule" {
-  depends_on   = [aws_alb_target_group.fortunecookie]  
-  listener_arn = aws_alb_listener.fortunecookie.arn  
-  
-  action {    
-    type             = "redirect"    
-    redirect {
-      port        = 80
-      protocol    = "tcp"
-      status_code =  "HTTP_301"   
-      } 
-  }
-
-   condition {
-    http_header {
-      http_header_name = "X-Forwarded_For"
-      values           = ["172.16.0.*"]
     }
   }
 }
