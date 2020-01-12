@@ -17,14 +17,32 @@ resource "aws_alb_target_group" "fortunecookie" {
 }
 
 #creating network load balancer
-resource "aws_alb" "fortunecookie" {
-  name                             = "fortunecookie-loadbalancer"
+resource "aws_alb" "fc" {
+  name                             = "fc"
   internal                         = false
   load_balancer_type               = "application"
+  idle_timeout                     = "75"
   enable_cross_zone_load_balancing = true
   subnets                          = [aws_subnet.fortunecookie1.id, aws_subnet.fortunecookie2.id]
   security_groups                  = [aws_security_group.fortunecookie.id]
   
+}
+
+#get primary zone
+data "aws_route53_zone" "greatcatlab" {
+  name = "greatcatlab.net"
+}
+#DNS entry for fortunecookie.greatcatlab.net
+resource "aws_route53_record" "fortunecookie" {
+  zone_id = data.aws_route53_zone.greatcatlab.zone_id
+  name    = "fortunecookie.${data.aws_route53_zone.greatcatlab.name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_alb.fc.dns_name
+    zone_id                = aws_alb.fc.zone_id
+    evaluate_target_health = true
+  }
 }
 
 #Autoscaling Attachment
@@ -41,7 +59,7 @@ data "aws_acm_certificate" "myaws" {
 
 #specify listener
 resource "aws_alb_listener" "fc-frontend-443" {
-  load_balancer_arn = aws_alb.fortunecookie.arn
+  load_balancer_arn = aws_alb.fc.arn
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -54,7 +72,7 @@ resource "aws_alb_listener" "fc-frontend-443" {
 }
 
 resource "aws_alb_listener" "fc-frontend-80" {
-  load_balancer_arn = aws_alb.fortunecookie.arn
+  load_balancer_arn = aws_alb.fc.arn
   port              = "80"
   protocol          = "HTTP"
   default_action {
