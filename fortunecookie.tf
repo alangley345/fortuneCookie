@@ -175,10 +175,10 @@ resource "aws_launch_configuration" "fortunecookie" {
 resource "aws_autoscaling_group" "fortunecookie" {
   name                      = "fortunecookie autoscaling group"
   max_size                  = "2"
-  min_size                  = "1"
+  min_size                  = "2"
   health_check_grace_period = 300
   health_check_type         = "ELB"
-  desired_capacity          = 1
+  desired_capacity          = 2
   force_delete              = true
   launch_configuration      = aws_launch_configuration.fortunecookie.id
   vpc_zone_identifier       = [aws_subnet.fortunecookie1.id, aws_subnet.fortunecookie2.id]
