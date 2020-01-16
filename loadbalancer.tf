@@ -21,7 +21,7 @@ resource "aws_alb" "fc" {
   name                             = "fc"
   internal                         = false
   load_balancer_type               = "application"
-  idle_timeout                     = "75"
+  idle_timeout                     = "60"
   enable_cross_zone_load_balancing = true
   subnets                          = [aws_subnet.fortunecookie1.id, aws_subnet.fortunecookie2.id]
   security_groups                  = [aws_security_group.fortunecookie.id]
