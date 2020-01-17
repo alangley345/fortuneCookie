@@ -16,7 +16,7 @@ resource "aws_alb_target_group" "fortunecookie" {
   }
 }
 
-#security group for fortune cookie loadbalancer
+#security group for fortune cookie load balancer
 resource "aws_security_group" "lb-fortunecookie" {
   name        = "Fortune Cookie Load Balancer"
   description = "Allow all traffic to Fortune Cookie hosts"
@@ -34,7 +34,7 @@ resource "aws_security_group" "lb-fortunecookie" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.host-fortunecookie.id]
   }
 }
 
