@@ -21,7 +21,6 @@ resource "aws_security_group" "lb-fortunecookie" {
   name        = "Fortune Cookie"
   description = "Allow all traffic to Fortune Cookie hosts"
   vpc_id      = aws_vpc.fortunecookie.id
-  depends_on  = [aws_security_group.host-fortunecookie.id]
 
   ingress {
     from_port   = 0
