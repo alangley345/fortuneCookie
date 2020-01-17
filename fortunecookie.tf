@@ -127,27 +127,27 @@ resource "aws_main_route_table_association" "fortunecookie" {
 }
 
 
-#security group for fortune cookie host
-resource "aws_security_group" "fortunecookie" {
+#security group for fortune cookie hosts
+resource "aws_security_group" "host-fortunecookie" {
   name        = "Fortune Cookie"
-  description = "Allow Web Traffic to Fortune Cookie"
+  description = "Allow Web Traffic to Fortune Cookie LB"
   vpc_id      = aws_vpc.fortunecookie.id
   depends_on  = [aws_internet_gateway.fortunecookie]
 
   # SSH from all
 
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lb-fortuneCookie.id]
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.lb-fortuneCookie.id]
   }
 
   # Outbound All
@@ -155,7 +155,7 @@ resource "aws_security_group" "fortunecookie" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.lb-fortuneCookie.id]
   }
 }
 
@@ -163,7 +163,7 @@ resource "aws_security_group" "fortunecookie" {
 resource "aws_launch_configuration" "fortunecookie" {
   image_id        = data.aws_ami.fortunecookie.id
   instance_type   = "t2.micro"
-  security_groups = [aws_security_group.fortunecookie.id]
+  security_groups = [aws_security_group.host-fortunecookie.id]
   key_name        = "fortuneCookie"
 
   lifecycle {
