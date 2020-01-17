@@ -129,7 +129,7 @@ resource "aws_main_route_table_association" "fortunecookie" {
 
 #security group for fortune cookie hosts
 resource "aws_security_group" "host-fortunecookie" {
-  name        = "Fortune Cookie"
+  name        = "Fortune Cookie Host"
   description = "Allow Web Traffic to Fortune Cookie LB"
   vpc_id      = aws_vpc.fortunecookie.id
   depends_on  = [aws_internet_gateway.fortunecookie]

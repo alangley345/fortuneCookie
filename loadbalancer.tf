@@ -18,7 +18,7 @@ resource "aws_alb_target_group" "fortunecookie" {
 
 #security group for fortune cookie loadbalancer
 resource "aws_security_group" "lb-fortunecookie" {
-  name        = "Fortune Cookie"
+  name        = "Fortune Cookie Load Balancer"
   description = "Allow all traffic to Fortune Cookie hosts"
   vpc_id      = aws_vpc.fortunecookie.id
 
