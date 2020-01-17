@@ -1,7 +1,7 @@
 #security group for fortune cookie hosts
 resource "aws_security_group" "host-fortunecookie" {
   name        = "Fortune Cookie Host"
-  description = "Allow Web Traffic to Fortune Cookie LB"
+  description = "Allow Web Traffic to Fortune Cookie hosts"
   vpc_id      = aws_vpc.fortunecookie.id
   depends_on  = [aws_internet_gateway.fortunecookie]
 
