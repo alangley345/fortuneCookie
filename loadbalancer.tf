@@ -7,7 +7,7 @@ resource "aws_alb_target_group" "fortunecookie" {
 
   health_check {
     interval            = 30
-    path                = "/etc"
+    path                = "/var/website"
     protocol            = "HTTP"
     timeout             = 5
     healthy_threshold   = 5
