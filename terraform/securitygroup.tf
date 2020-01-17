@@ -17,16 +17,6 @@ resource "aws_security_group_rule" "http-to-host" {
     source_security_group_id = aws_security_group.lb-fortunecookie.id
 }
 
-#https rule
-resource "aws_security_group_rule" "https-to-host" {
-    type = "ingress"
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
-    security_group_id = aws_security_group.host-fortunecookie.id
-    source_security_group_id = aws_security_group.lb-fortunecookie.id
-}
-
 #egress ALL rule
 resource "aws_security_group_rule" "outbound-to-lb" {
     type = "egress"
@@ -48,7 +38,7 @@ resource "aws_security_group" "lb-fortunecookie" {
 
 #Ingress https
 resource "aws_security_group_rule" "https-listener" {
-    type = "egress"
+    type = "ingress"
     from_port = 443
     to_port = 443
     protocol = "tcp"
@@ -70,8 +60,8 @@ resource "aws_security_group_rule" "http-listener" {
 resource "aws_security_group_rule" "outbound-to-host" {
     type = "egress"
     from_port = 80
-    to_port = 8
-    protocol = "-1"
+    to_port = 80
+    protocol = "tcp"
     security_group_id = aws_security_group.lb-fortunecookie.id
     cidr_blocks = [aws_vpc.fortunecookie.cidr_block]
 }
