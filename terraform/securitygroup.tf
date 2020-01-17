@@ -5,7 +5,6 @@ resource "aws_security_group" "host-fortunecookie" {
   vpc_id      = aws_vpc.fortunecookie.id
   depends_on  = [aws_internet_gateway.fortunecookie]
 
-  # SSH from all
 
   ingress {
     from_port       = 80
@@ -43,7 +42,7 @@ resource "aws_security_group" "lb-fortunecookie" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Outbound All
+  #outbound to web server
   egress {
     from_port   = 0
     to_port     = 0
