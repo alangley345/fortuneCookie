@@ -4,6 +4,7 @@
 resource "aws_security_group" "host-fortunecookie" {
   name = "SG-Fortune Cookie Host"
   description = "Fortune Cookie Host Group"
+  vpc_id      = aws_vpc.fortunecookie.id
 }
 
 #http in host rule
@@ -42,6 +43,7 @@ resource "aws_security_group_rule" "outbound-to-lb" {
 resource "aws_security_group" "lb-fortunecookie" {
   name = "SG-Fortune Cookie LB"
   description = "Fortune Cookie Loadbalancer Group"
+  vpc_id      = aws_vpc.fortunecookie.id
 }
 
 #Ingress https
