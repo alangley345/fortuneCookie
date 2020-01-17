@@ -63,5 +63,5 @@ resource "aws_security_group_rule" "outbound-to-host" {
     to_port = 80
     protocol = "tcp"
     security_group_id = aws_security_group.lb-fortunecookie.id
-    cidr_blocks = [aws_vpc.fortunecookie.cidr_block]
+    source_security_group_id = aws_security_group.host-fortunecookie.id
 }
