@@ -3,7 +3,7 @@ resource "aws_security_group" "host-fortunecookie" {
   name        = "Fortune Cookie Host"
   description = "Allow Web Traffic to Fortune Cookie hosts"
   vpc_id      = aws_vpc.fortunecookie.id
-  depends_on  = [aws_internet_gateway.fortunecookie]
+  depends_on  = [aws_security_group.lb-fortunecookie.id]
 
 
   ingress {
@@ -34,6 +34,7 @@ resource "aws_security_group" "lb-fortunecookie" {
   name        = "Fortune Cookie Load Balancer"
   description = "Allow all traffic to Fortune Cookie hosts"
   vpc_id      = aws_vpc.fortunecookie.id
+  depends_on  = [aws_security_group.host-fortunecookie.id]
 
   ingress {
     from_port   = 0
