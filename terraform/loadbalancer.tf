@@ -16,28 +16,6 @@ resource "aws_alb_target_group" "fortunecookie" {
   }
 }
 
-#security group for fortune cookie load balancer
-resource "aws_security_group" "lb-fortunecookie" {
-  name        = "Fortune Cookie Load Balancer"
-  description = "Allow all traffic to Fortune Cookie hosts"
-  vpc_id      = aws_vpc.fortunecookie.id
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Outbound All
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    security_groups = [aws_security_group.host-fortunecookie.id]
-  }
-}
-
 #creating application load balancer
 resource "aws_alb" "fc" {
   name                             = "fc"
