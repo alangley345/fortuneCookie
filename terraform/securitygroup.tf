@@ -37,7 +37,7 @@ resource "aws_security_group" "lb-fortunecookie" {
 }
 
 #Ingress https
-resource "aws_security_group_rule" "https-listener" {
+resource "aws_security_group_rule" "lb-https-listener" {
     type = "ingress"
     from_port = 443
     to_port = 443
@@ -47,7 +47,7 @@ resource "aws_security_group_rule" "https-listener" {
 }
 
 #Ingress http
-resource "aws_security_group_rule" "http-listener" {
+resource "aws_security_group_rule" "lb-http-listener" {
     type = "ingress"
     from_port = 80
     to_port = 80
@@ -57,7 +57,7 @@ resource "aws_security_group_rule" "http-listener" {
 }
 
 #Egress http 
-resource "aws_security_group_rule" "outbound-to-host" {
+resource "aws_security_group_rule" "lb-to-host" {
     type = "egress"
     from_port = 80
     to_port = 80
