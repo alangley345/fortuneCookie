@@ -13,9 +13,15 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
   tier                = "WebServer"
 
   setting {
-   namespace = "aws:autoscaling:launchconfiguration"
-   name      = "IamInstanceProfile"
-   value     = aws_iam_instance_profile.fortune-cookie.id
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = aws_iam_instance_profile.fortune-cookie-ec2.id
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = aws_iam_instance_profile.fortune-cookie-s3.id
   }
 
   setting {
