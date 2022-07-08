@@ -66,15 +66,20 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
     name      = "MaxSize"
     value     = 1
   }
-  setting {
-    namespace = "aws:elasticbeanstalk:healthreporting:system"
-    name      = "SystemType"
-    value     = "enhanced"
-  }
+  #setting {
+  #  namespace = "aws:elasticbeanstalk:healthreporting:system"
+  #  name      = "SystemType"
+  #  value     = "enhanced"
+  #}
 
   tags = {
     purpose     = "fortunecookieapp"
     Environment = "production"
+  }
+
+  #avoid reapplying every tweak
+  lifecycle {
+    ignore_changes = [setting]
   }
 
 }
