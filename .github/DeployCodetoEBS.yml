@@ -1,0 +1,23 @@
+name: Upload to resume.aaronlangley.net S3 bucket
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Deploy code to EBS
+        shell: bash
+        env:
+          access_key: ${{ secrets.ACCESS_TOKEN }}
+          secret_key: ${{ secrets.SECRET_KEY }}
+          s3_bucket: ${{ secrets.BUCKET_NAME }}
+        run: |
+          cat ./terraform/app-version.txt | export NAME 
+          aws configure set aws_access_key_id $access_key
+          aws configure set aws_secret_access_key $secret_key 
+          aws --region us-east-1 elasticbeanstalk update-environment --environment-name fortune-cookie-env --version-label $NAME
+ 
