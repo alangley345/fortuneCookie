@@ -1,9 +1,13 @@
-resource "aws_s3_bucket" "resume" {
+resource "aws_s3_bucket" "fortune-cookie" {
   bucket = "fortune.aaronlangley.net"
-  acl    = "private"
 
   lifecycle {
     prevent_destroy = true
   }
 
+}
+
+resource "aws_s3_bucket_acl" "fortune-cookie" {
+  bucket = aws_s3_bucket.fortune-cookie.id
+  acl    = "private"
 }

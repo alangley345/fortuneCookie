@@ -15,5 +15,5 @@ data "archive_file" "fortune-cookie-zip" {
 }
 
 data "aws_elastic_beanstalk_hosted_zone" "fortune-cookie" {
-  
+
 }
