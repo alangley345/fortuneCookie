@@ -13,3 +13,7 @@ data "archive_file" "fortune-cookie-zip" {
   source_dir  = "../site"
   output_path = "fortune_cookie.zip"
 }
+
+data "aws_elastic_beanstalk_hosted_zone" "fortune-cookie" {
+  
+}

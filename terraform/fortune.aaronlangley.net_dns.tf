@@ -5,7 +5,7 @@ resource "aws_route53_record" "resume" {
 
   alias {
     name                   = aws_elastic_beanstalk_environment.fortune-cookie-env.cname
-    zone_id                = data.terraform_remote_state.base_state.outputs.aaronlangley_zone_id
+    zone_id                = data.aws_elastic_beanstalk_hosted_zone.fortune-cookie.id
     evaluate_target_health = true
   }
 }
