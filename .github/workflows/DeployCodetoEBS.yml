@@ -17,7 +17,7 @@ jobs:
           secret_key: ${{ secrets.SECRET_KEY }}
           s3_bucket: ${{ secrets.BUCKET_NAME }}
         run: |
-          NAME = $(< app-version.txt) 
+          export NAME = $(< app-version.txt) 
           aws configure set aws_access_key_id $access_key
           aws configure set aws_secret_access_key $secret_key 
           aws --region us-east-1 elasticbeanstalk update-environment --environment-name fortune-cookie-env --version-label $NAME
