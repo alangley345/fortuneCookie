@@ -90,11 +90,11 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
     value     = 1
   }
 
-  #setting {
-  #  namespace = "aws:elasticbeanstalk:healthreporting:system"
-  #  name      = "SystemType"
-  #  value     = "enhanced"
-  #}
+  setting {
+    namespace = "aws:elasticbeanstalk:healthreporting:system"
+    name      = "SystemType"
+    value     = "enhanced"
+  }
 
   tags = {
     purpose     = "fortunecookieapp"
