@@ -8,4 +8,9 @@ resource "aws_elastic_beanstalk_application_version" "fortune-cookie" {
     depends_on = [ 
       aws_s3_object.code-bundle
     ]
-}   
+}
+
+resource "local_file" "app-version" {
+    content  = aws_elastic_beanstalk_application_version.fortune-cookie.key
+    filename = "app-version.txt" 
+}
