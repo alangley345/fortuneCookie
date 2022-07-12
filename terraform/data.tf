@@ -11,7 +11,7 @@ data "terraform_remote_state" "base_state" {
 data "archive_file" "fortune-cookie-zip" {
   type        = "zip"
   source_dir  = "../site"
-  output_path = "fortune_cookie.zip"
+  output_path = "fc-${uuid()}.zip"
 }
 
 data "aws_elastic_beanstalk_hosted_zone" "fortune-cookie" {
