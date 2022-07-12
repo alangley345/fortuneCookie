@@ -1,11 +1,9 @@
 # Create elastic beanstalk application
-
 resource "aws_elastic_beanstalk_application" "fortune-cookie" {
   name = "fortune-cookie"
 }
 
 # Create elastic beanstalk Environment
-
 resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
   name                   = "fortune-cookie-env"
   application            = aws_elastic_beanstalk_application.fortune-cookie.name
@@ -24,6 +22,12 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
     name      = "IamInstanceProfile"
     value     = aws_iam_instance_profile.fortune-cookie-s3.id
   }
+
+  #setting {
+  #  namespace = "aws:autoscaling:launchconfiguration"
+  #  name      = "IamInstanceProfile"
+  #  value     = aws_iam_instance_profile.fortune-cookie-cw.id
+  #}
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
@@ -78,11 +82,11 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
     value     = "SingleInstance"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:container:nodejs"
-    name      = "NodeCommand"
-    value     = "npm start"
-  }
+  #setting {
+  #  namespace = "aws:elasticbeanstalk:container:nodejs"
+  #  name      = "NodeCommand"
+  #  value     = "npm start"
+  #}
 
   setting {
     namespace = "aws:autoscaling:asg"

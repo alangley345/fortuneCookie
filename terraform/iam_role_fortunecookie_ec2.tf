@@ -44,28 +44,30 @@ resource "aws_iam_role" "fortune-cookie-s3" {
     EOF
 }
 
-resource "aws_iam_instance_profile" "fortune-cookie-cw" {
-  name = "fortune-cookie-cw-user"
-  role = aws_iam_role.fortune-cookie-cw.id
-}
-
-resource "aws_iam_role" "fortune-cookie-cw" {
-  name               = "fortune-cookie-cw-role"
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-  {
-    "Effect": "Allow",
-    "Action": [
-      "logs:PutLogEvents",
-      "logs:CreateLogStream"
-    ],
-    "Resource": [
-    "*"
-    ]
-  }
-  ]
-}
-    EOF
-}
+#resource "aws_iam_instance_profile" "fortune-cookie-cw" {
+#  name = "fortune-cookie-cw-user"
+#  role = aws_iam_role.fortune-cookie-cw.id
+#}
+#
+#resource "aws_iam_role" "fortune-cookie-cw" {
+#  name               = "fortune-cookie-cw-role"
+#  assume_role_policy = <<EOF
+#{
+#  "Version": "2012-10-17",
+#  "Statement": [
+#    {
+#      "Effect": "Allow",
+#      "Action": [
+#        "logs:CreateLogGroup",
+#        "logs:CreateLogStream",
+#        "logs:PutLogEvents",
+#        "logs:DescribeLogStreams"
+#    ],
+#      "Principal": [
+#        "${aws_cloudwatch_log_group.fortune-cookie.arn}"
+#    ]
+#  }
+# ]
+#}
+#    EOF
+#}
