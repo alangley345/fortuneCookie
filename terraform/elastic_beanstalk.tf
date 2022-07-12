@@ -73,6 +73,12 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
   }
 
   setting {
+    namespace = "aws:elasticbeanstalk:container:nodejs"
+    name      = "NodeCommand"
+    value     = "npm start"
+  }
+
+  setting {
     namespace = "aws:ec2:vpc"
     name      = "VPCId"
     value     = data.terraform_remote_state.base_state.outputs.prod_ext_vpc_id
