@@ -1,5 +1,5 @@
-resource "aws_security_group" "allow_nodejs" {
-  name        = "allow_nodejs"
+resource "aws_security_group" "allow-nodejs" {
+  name        = "allow-nodejs"
   description = "Allow traffic to Node.js for testing"
   vpc_id      = data.terraform_remote_state.base_state.outputs.prod_ext_vpc_id
 
@@ -21,6 +21,8 @@ resource "aws_security_group" "allow_nodejs" {
   }
 
   tags = {
-    Name = "allow_tls"
+    Name        = "allow-nodejs"
+    Environment = "prod"
+    Purpose     = "fortunecookie"
   }
 }

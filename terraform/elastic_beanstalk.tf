@@ -26,6 +26,18 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
   }
 
   setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "InstanceType"
+    value     = "t2.nano"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SecurityGroups"
+    value     = aws_security_group.allow-nodejs.id
+  }
+
+  setting {
     namespace = "aws:elb:listener"
     name      = "InstancePort"
     value     = "3000"
@@ -41,6 +53,12 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
     namespace = "aws:ec2:vpc"
     name      = "AssociatePublicIpAddress"
     value     = "True"
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "VPCId"
+    value     = data.terraform_remote_state.base_state.outputs.prod_ext_vpc_id
   }
 
   setting {
@@ -61,27 +79,9 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
   }
 
   setting {
-    namespace = "aws:autoscaling:launchconfiguration"
-    name      = "InstanceType"
-    value     = "t2.nano"
-  }
-
-  setting {
-    namespace = "aws:autoscaling:launchconfiguration"
-    name      = "SecurityGroups"
-    value     = aws_security_group.allow_nodejs.id
-  }
-
-  setting {
     namespace = "aws:elasticbeanstalk:container:nodejs"
     name      = "NodeCommand"
     value     = "npm start"
-  }
-
-  setting {
-    namespace = "aws:ec2:vpc"
-    name      = "VPCId"
-    value     = data.terraform_remote_state.base_state.outputs.prod_ext_vpc_id
   }
 
   setting {
@@ -100,6 +100,12 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name      = "SystemType"
     value     = "enhanced"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:cloudwatch:logs"
+    name      = "StreamLogs"
+    value     = "true"
   }
 
   tags = {
