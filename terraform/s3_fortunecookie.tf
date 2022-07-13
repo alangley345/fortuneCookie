@@ -12,8 +12,8 @@ resource "aws_s3_bucket_acl" "fortune-cookie" {
   acl    = "private"
 }
 
-resource "aws_s3_object" "code-bundle" {
-  key    = "fc-${uuid()}"
-  bucket = aws_s3_bucket.fortune-cookie.id
-  source = "fortune_cookie.zip"
-}
+#resource "aws_s3_object" "code-bundle" {
+#  key    = "fc-${uuid()}"
+#  bucket = aws_s3_bucket.fortune-cookie.id
+#  source = "fortune_cookie.zip"
+#}

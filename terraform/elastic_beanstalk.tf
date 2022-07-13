@@ -82,12 +82,6 @@ resource "aws_elastic_beanstalk_environment" "fortune-cookie-env" {
     value     = "SingleInstance"
   }
 
-  #setting {
-  #  namespace = "aws:elasticbeanstalk:container:nodejs"
-  #  name      = "NodeCommand"
-  #  value     = "npm start"
-  #}
-
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MinSize"
