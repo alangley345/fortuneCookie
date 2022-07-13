@@ -1,9 +1,9 @@
 resource "aws_s3_bucket" "fortune-cookie" {
   bucket = "fortune.aaronlangley.net"
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  #lifecycle {
+  #  prevent_destroy = true
+  #}
 
 }
 
