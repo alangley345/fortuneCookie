@@ -1,6 +1,6 @@
-const fortuneModel = require("../models/fortunes");
+const fortunesModel = require("../models/fortunesModel");
 
-exports.getfortunesController = (req, res, next) =>  {
-    const fortunes = fortunesModel.getFortunes();
-    res.json(fortunes);
+exports.getFortunesController = (req, res, next) =>  {
+    const fortunes = fortunesModel.getAllFortunes();
+    res.json(fortunes)
 }
