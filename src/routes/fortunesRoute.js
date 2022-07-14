@@ -1,8 +1,10 @@
 var express = require('express');
 var router  = express.Router();
 
-// GET listing of fortunes
 fortunesController = require("../controllers/fortunesController");
-router.get("/", fortunesController.getFortunesController);
+// GET listing of fortunes
+router.get("/all", fortunesController.getAllFortunes);
+// GET single fortune
+router.get("/new", fortunesController.getNewFortune);
 
 module.exports = router;

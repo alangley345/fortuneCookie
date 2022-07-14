@@ -13,3 +13,8 @@ const fortunes = [
 exports.getAllFortunes = () => {
     return fortunes;
 };
+
+exports.getNewFortune = () => {
+    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+    return randomFortune
+};

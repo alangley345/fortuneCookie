@@ -1,9 +1,12 @@
+//requires statemetns
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require("mongoose");
 
+//define router objects
 var indexRouter = require('./routes/indexRoute');
 var fortunesRouter = require('./routes/fortunesRoute');
 
