@@ -1,10 +1,26 @@
 
-#Fortune Cookie Web App and Site to learn AWS
-=====================
+# Fortune Cookie Web App
+================================================
 
-1. Started out with static html over the default index.html on a manually provisioned aws t2.micro instance.
-2. Created a terraform config to automatically deploy aws instance on EC2, then manually installed nginxi and updated website content.
-3. Turned nginix / website deploy into a packer-built ami using shell script and reconfigured terraform to use this instance.
-4. Redeployed site using packer to call ansible, having ansible configure packer build using a playbook.
-5. Reconfigured .tf file to include autoscaling groups and created a .tf file for the load balancer. Configured the loadbalancer file to create load balancer with HTTP listener that redirects to HTTPS and HTTPS that redirects to instances of fortunecookie.greatcat.net. Removed external IP associated with instances in the target group. 
+## My intention is to complete the following parts of this project:
+
+* Angular frontend hosted in S3 (leaning towards exposing this with Cloudflare)
+* Nodejs/Express backend hosted on EBS (maybe a container)
+* AWS SES to email fortunes out
+* MongoDB Atlas hosted db
+
+## Methods
+* Connect the DB to the Backend using an IAM role integration.
+* Define resources using Terraform
+* Github Actions and shell to glue everything together.
+* Send logs to either Cloud Watch or New Relic
+
+## Necessary API Calls
+* Get a new fortune from DB
+* Get all fortunes in DB
+* Add fortune to DB
+* Add user to allow authentication to add fortune
+* Enable subscriptions
+
+
 
