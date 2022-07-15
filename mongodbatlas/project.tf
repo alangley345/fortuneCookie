@@ -1,4 +1,4 @@
-resource "mongodbatlas_project" "fortune_cookie" {
+resource "mongodbatlas_project" "fortune-cookie" {
   name   = "Fortune Cookie"
   org_id = var.mongodbatlas_org_id
   #project_owner_id = "<OWNER_ACCOUNT_ID>"
