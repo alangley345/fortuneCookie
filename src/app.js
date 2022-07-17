@@ -1,4 +1,6 @@
 //requires statements
+var path = require('path'); require('dotenv').config({path:
+path.join(__dirname,'.env') });
 var createError  = require('http-errors');
 var express      = require('express');
 var path         = require('path');
@@ -7,9 +9,15 @@ var logger       = require('morgan');
 var mongoose     = require("mongoose");
 //var https        = require("https")
 
-//variables
-var url          = 'Connection  String'
 
+//variables
+var dbUserPsswd  = process.env.FORTUNE_COOKIE_DB_PSSWD
+var dbUser       = 'fortunecookie'
+var url          = 'mongodb+srv://' + dbUser + ':' + dbUserPsswd + '@mysharedcluster.dcfx1z7.mongodb.net/?retryWrites=true&w=majority'
+
+
+//mongodbatlas connection
+mongoose.connect(url)
 
 //define router objects
 var indexRouter    = require('./routes/indexRoute');
