@@ -1,8 +1,4 @@
-//hardcoded list of fortunes for now.
-//TO DO - move to dedicated DB later
-
-const { default: mongoose } = require("mongoose");
-
+/*
 const fortunes = [
     {"id":1, content:"You will accomplish much today."},
     {"id":2, content:"Take risks because you have luck on your side."},
@@ -11,23 +7,40 @@ const fortunes = [
     {"id":5, content:"Reach for the stars"},
     {"id":6, content:"Everyday begins with a new sunrise."}
 ];
+*/
+var mongoose     = require("mongoose");
+
+//variables
+var path         = require('path'); require('dotenv').config({path:
+    path.join(__dirname,'.env') });
+var dbUserPsswd  = process.env.FORTUNE_COOKIE_DB_PSSWD
+var dbUser       = 'fortunecookie'
+var dbName       = 'FortuneCookieApp'
+var url          = 'mongodb+srv://' + dbUser + ':' + dbUserPsswd + '@mysharedcluster.dcfx1z7.mongodb.net/' + dbName
+
+//mongodbatlas connection
+mongoose.connect(url)
+var dbConnection = mongoose.connection;
+dbConnection.on('connected', function() {
+  console.log('Successfully connected to database!');
+});
 
 var fortunesSchema = new mongoose.Schema({
-    content: String,
-    contributor: String
+    content: {
+        type: String,
+        required: true,
+    },
+    contributor: {
+        type: String,
+        required: true,
+    }
 })
 
-var fortunesModel = mongoose.model('fortunes',fortunesSchema)
+var fortunesModel = mongoose.model('fortunesModel',fortunesSchema)
 
-exports.getNewFortune = () => {
-    const fortune = fortunesModel.findOne();
-};
-
-//exports.getAllFortunes = () => {
-//    return fortunes;
-//};
-
-//exports.getNewFortune = () => {
-//  const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-//  return randomFortune
-//};
+module.exports={
+    //return a single fortune
+    getNewFortune: function(){
+        fortunesModel.findOne({})
+    }
+}
