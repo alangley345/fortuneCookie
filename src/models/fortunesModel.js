@@ -41,13 +41,10 @@ const getNewFortune = async () => {
 }
 
 const getAllFortunes = async () => {
-    var fortune = await fortunesModel.find().lean();
-    return fortune  
+    var fortunes = await fortunesModel.find().lean();
+    return fortunes  
 }
 
 //exports
 exports.getNewFortune  = getNewFortune;
 exports.getAllFortunes = getAllFortunes;
-
-
-
