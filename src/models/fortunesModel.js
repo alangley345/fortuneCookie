@@ -1,13 +1,3 @@
-/*
-const fortunes = [
-    {"id":1, content:"You will accomplish much today."},
-    {"id":2, content:"Take risks because you have luck on your side."},
-    {"id":3, content:"The best relationships are formed by listening and learning."},
-    {"id":4, content:"Do you best for you."},
-    {"id":5, content:"Reach for the stars"},
-    {"id":6, content:"Everyday begins with a new sunrise."}
-];
-*/
 var mongoose     = require("mongoose");
 
 //variables
@@ -25,6 +15,7 @@ dbConnection.on('connected', function() {
   console.log('Successfully connected to database!');
 });
 
+//schema
 var fortunesSchema = new mongoose.Schema({
     content: {
         type: String,
@@ -36,11 +27,27 @@ var fortunesSchema = new mongoose.Schema({
     }
 })
 
-var fortunesModel = mongoose.model('fortunesModel',fortunesSchema)
+//model
+var fortunesModel = mongoose.model('fortunes',fortunesSchema);
 
-module.exports={
-    //return a single fortune
-    getNewFortune: function(){
-        fortunesModel.findOne({})
-    }
+
+
+//get a random new fortune
+const getNewFortune = async () => {
+    var count   = await fortunesModel.count();
+    var random  = Math.floor(Math.random()*count);
+    var fortune = await fortunesModel.findOne().skip(random).lean();
+    return fortune  
 }
+
+const getAllFortunes = async () => {
+    var fortune = await fortunesModel.find().lean();
+    return fortune  
+}
+
+//exports
+exports.getNewFortune  = getNewFortune;
+exports.getAllFortunes = getAllFortunes;
+
+
+

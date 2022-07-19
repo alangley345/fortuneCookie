@@ -1,16 +1,25 @@
 const fortunesModel = require("../models/fortunesModel");
 
 //calls to model
-module.exports={
-
-    getNewFortune:function(req, res){
-        fortunesModel.getNewFortune(function(fortune){
-            res.json(fortune)
-        })
+const getNewFortune = async (req, res, next) => {
+    var fortune = await fortunesModel.getNewFortune();
+    try {
+        res.json(fortune);
+    }
+    catch {
+        res.status(500)
     }
 }
 
-exports.getAllFortunes = (req, res, next) =>  {
-    const fortunes = fortunesModel.getAllFortunes();
-    res.json(fortunes);
+const getAllFortunes = async (req, res, next) => {
+    var fortunes = await fortunesModel.getAllFortunes();
+    try {
+        res.json(fortunes);
+    }
+    catch {
+        res.status(500)
+    }
 }
+//exports
+exports.getNewFortune  = getNewFortune;
+exports.getAllFortunes = getAllFortunes;
