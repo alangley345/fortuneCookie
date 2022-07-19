@@ -11,21 +11,21 @@
         }
       },
       "root": "",
-      "sourceRoot": "",
+      "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/angular",
-            "index": "index.html",
+            "index": "views/index.html",
             "main": "main.ts",
             "polyfills": "polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "favicon.ico",
-              "assets"
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
               "styles.scss"
@@ -92,7 +92,7 @@
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "favicon.ico",
+              "src/favicon.ico",
               "assets"
             ],
             "styles": [
