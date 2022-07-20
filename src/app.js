@@ -8,25 +8,23 @@ var logger       = require('morgan');
 
 //define router objects
 var indexRouter    = require('./routes/indexRoute');
-var fortunesRouter = require('./routes/fortunesRoute');
+var apiRouter = require('./routes/apiRoute');
 //const { connect } = require('http2');
 
 var app = express();
 
 // view engine setup
+app.use(express.static(__dirname + '/dist/angular'));
 app.set('view engine', 'pug');
-app.set('views', __dirname + "/views");
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname)));
-app.use(express.static('./app'));
 
 //routes
 app.use('/', indexRouter);
-app.use('/fortunes', fortunesRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
