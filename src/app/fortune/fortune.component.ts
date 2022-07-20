@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FortuneService } from './fortune.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-fortune',
@@ -9,14 +11,15 @@ import { FortuneService } from './fortune.service';
 
 export class FortuneComponent implements OnInit {
 
-  fortune:any;
+  constructor(private http: HttpClient) { }
 
-  constructor(private service: FortuneService) { }
+  readonly url = 'http://localhost:3000/api/fortunes/new';
+  fortunes:any;
 
   ngOnInit(){
-    this.service.getFortune()
-      .subscribe(response => {
-        this.fortune = response;
-    });
+     this.http.get<any>('http://localhost:3000/api/fortunes/new')
+      .subscribe(data => {
+        this.fortunes = data;
+      }); 
   }
 }
