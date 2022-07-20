@@ -1,0 +1,31 @@
+body {
+    background-image: url("../static/fortunecookie1.jpg");
+    font-family: "Comfortaa";
+    color: #fff;
+    text-align: center;
+  }
+    
+  #title {
+    font-family: Comfortaa;
+    font-size: 4em;
+  }
+    
+  #tag line {
+    font-family: Comfortaa;
+    font-size: 2.5em;
+  }
+  
+  #main {
+    padding: 20px;
+  }
+  
+  #features {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+    width: 50%;
+  }
+    

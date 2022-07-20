@@ -3,7 +3,7 @@ var router  = express.Router();
 
 // GET listing of fortunes
 router.get("/", function(req, res, next) {
-    res.render("index",{title:"Fortune Cookie"})
+    res.sendFile("index.html")
 });
 
 module.exports = router;
