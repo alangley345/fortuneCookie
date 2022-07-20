@@ -4,16 +4,16 @@
 
 ## My intention is to complete the following parts of this project:
 
-* Angular frontend hosted in S3 (leaning towards exposing this with Cloudflare)
-* Nodejs/Express backend hosted on EBS (maybe a container)
-* AWS SES to email fortunes out
-* MongoDB Atlas hosted db
+* Angular frontend hosted served by Node.js backend
+* Nodejs/Express backend hosted on Heroku
+* AWS SES to email fortunes out(Maybe?)
+* MongoDB Atlas hosted db (Complete)
 
 ## Methods
-* Connect the DB to the Backend using an IAM role integration.
-* Define resources using Terraform
+* Connect the DB to the Backend using SCRAM and Environment variables.
+* Define resources using Terraform (Complete for MongoDB Atlas)
 * Github Actions and shell to glue everything together.
-* Send logs to either Cloud Watch or New Relic
+* Send logs to New Relic (Heroku add-on)
 
 ## Necessary API Calls
 * Get a new fortune from DB
