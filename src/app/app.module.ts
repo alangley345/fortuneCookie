@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { FortuneComponent } from './fortune/fortune.component';
+import { FortuneService } from './fortune/fortune.service';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { FortuneComponent } from './fortune/fortune.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [FortuneService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
