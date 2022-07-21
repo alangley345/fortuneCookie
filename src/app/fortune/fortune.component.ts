@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { response } from 'express';
+import { Inject } from '@angular/core';
 import { FortuneService } from './fortune.service';
 
 @Component({
@@ -11,17 +11,15 @@ import { FortuneService } from './fortune.service';
 
 export class FortuneComponent implements OnInit {
 
-  constructor(private fortuneservice: FortuneService) {}
+  constructor(@Inject(FortuneService) private fortuneservice: FortuneService){}
   fortunes:any;
 
   showNewFortune(){
     this.fortuneservice.getNewFortune()
-      .fortunes((data: any) => {
-        this.fortunes = data;
-      });
+      .subscribe((data: any) => this.fortunes = data);
   }
-
+  
   ngOnInit(){
-   this.showNewFortune();
+    this.showNewFortune();
   }
 }
