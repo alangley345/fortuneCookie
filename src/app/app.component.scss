@@ -1,3 +1,17 @@
+#background{
+  position: absolute;
+  background: center;
+  background-size: auto;
+  background-image: url("../assets/fortune_cookies.jpg");
+  min-height: 100%;
+  box-sizing: border-box;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+
 #title {
   font-size: 2em;
   right: 0;
@@ -5,8 +19,7 @@
   left: 0;
   top: 0;
   text-align: center;
-  margin: 0 auto;
-    
+  margin: 0 auto;    
 }
     
 #tag-line {
@@ -21,10 +34,6 @@
   
 #main {
   font-family: Comfortaa;
-  position: absolute;
-  background: center;
-  background-size: auto;
-  background-image: url("../assets/fortune_cookies.jpg");
   padding: 5px;
   right: 0;
   bottom: 0;
@@ -34,8 +43,6 @@
   color: rgba(255, 255, 255, 0.886);
   //background-color: rgba(244, 50, 50, 0.932);
   text-align: center;
-  min-height: 100%;
-  box-sizing: border-box;
 }
 
 #fortune-header {
@@ -56,10 +63,4 @@
   top: 0;
   text-align: center;
   margin: 0 auto;
-}
-  
-#Coming-soon {
-  bottom: 0;
-  text-align: center;
-
 }

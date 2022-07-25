@@ -1,21 +1,8 @@
-var mongoose     = require("mongoose");
+var db       = require("../db.js");
+var mongoose = require('mongoose')
+db.initDB();
 
-//variables
-var path         = require('path'); require('dotenv').config({path:
-    path.join(__dirname,'.env') });
-var dbUserPsswd  = process.env.FORTUNE_COOKIE_DB_PSSWD
-var dbUser       = 'fortunecookie'
-var dbName       = 'FortuneCookieApp'
-var url          = 'mongodb+srv://' + dbUser + ':' + dbUserPsswd + '@mysharedcluster.dcfx1z7.mongodb.net/' + dbName
-
-//mongodbatlas connection
-mongoose.connect(url)
-var dbConnection = mongoose.connection;
-dbConnection.on('connected', function() {
-  console.log('Successfully connected to database!');
-});
-
-//schema
+//fortunes schema
 var fortunesSchema = new mongoose.Schema({
     content: {
         type: String,
@@ -30,8 +17,6 @@ var fortunesSchema = new mongoose.Schema({
 //model
 var fortunesModel = mongoose.model('fortunes',fortunesSchema);
 
-
-
 //get a random new fortune
 const getNewFortune = async () => {
     var count   = await fortunesModel.count();
@@ -40,6 +25,7 @@ const getNewFortune = async () => {
     return fortune  
 }
 
+//get all fortunes in DB (Eventually need to paginate this)
 const getAllFortunes = async () => {
     var fortunes = await fortunesModel.find().lean();
     return fortunes  

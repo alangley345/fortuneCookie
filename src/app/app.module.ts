@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import { FortuneComponent } from './fortune/fortune.component';
 import { FortuneService } from './fortune/fortune.service';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FortuneComponent
+    FortuneComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

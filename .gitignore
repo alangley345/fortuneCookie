@@ -1,5 +1,5 @@
 #Angular Build Folder
-/src/dist/
+src/dist/*
 
 # Local .terraform directories
 **/.terraform/*
