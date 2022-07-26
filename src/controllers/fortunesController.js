@@ -4,7 +4,7 @@ const fortunesModel = require("../models/fortunesModel");
 const getNewFortune = async (req, res, next) => {
     var fortune = await fortunesModel.getNewFortune();
     try {
-        res.json(fortune);
+        res.status(200).json(fortune);
     }
     catch {
         res.status(500)
@@ -14,22 +14,12 @@ const getNewFortune = async (req, res, next) => {
 //all fortunes
 const getAllFortunes = async (req, res, next) => {
     var fortunes = await fortunesModel.getAllFortunes();
-    try {
-        res.json(fortunes);
-    }
-    catch {
-        res.status(500)
-    }
+     
 }
 
 //add new fortune
-const addNewFortune = async (req, res, next) => {
-    var fortuneData = {
-        content: "Love is in the air!",
-        contributor: "Aaron Langley"
-    };
-    await fortunesModel.addNewFortune(fortuneData);
-    //next();
+const addNewFortune = async (req, res) => {
+    await fortunesModel.addNewFortune(req);
     
 }
 

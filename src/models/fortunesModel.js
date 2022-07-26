@@ -1,5 +1,6 @@
 var db       = require("../db.js");
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
+const { response } = require("express");
 db.initDB();
 
 //fortunes schema
@@ -32,9 +33,9 @@ const getAllFortunes = async () => {
 }
 
 //add new fortune
-const addNewFortune = async (fortuneData) => {
-    var newFortune = new fortunesModel(fortuneData);
-    await newFortune.save();
+const addNewFortune = async (req, res) => {
+    var newRequest = new fortunesModel(req);
+    await newRequest.save();
 }
 
 //exports

@@ -8,9 +8,13 @@ import { HttpClient } from '@angular/common/http';
 export class FortuneService {
 
   constructor(private http: HttpClient) { }
-  readonly url = 'http://localhost:3000/api/fortunes/new';
+  readonly apiURL = 'http://localhost:3000/api/fortunes/';
 
   getNewFortune(){
-    return this.http.get<any>(this.url);
+    return this.http.get<any>(this.apiURL+'new');
   }
+
+  //addNewFortune(){
+  //  return this.http.post<any>(this.apiURL+'add',);
+  //}
 }
