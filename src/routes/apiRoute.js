@@ -7,4 +7,8 @@ const fortunesController = require("../controllers/fortunesController");
 router.get("/fortunes/new", fortunesController.getNewFortune);
 router.get("/fortunes/all", fortunesController.getAllFortunes);
 
+// POST new fortune
+router.post("/fortunes/add", fortunesController.addNewFortune);
+
+
 module.exports = router;

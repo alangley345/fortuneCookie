@@ -15,7 +15,7 @@ var fortunesSchema = new mongoose.Schema({
 })
 
 //model
-var fortunesModel = mongoose.model('fortunes',fortunesSchema);
+var fortunesModel = mongoose.model('fortune',fortunesSchema);
 
 //get a random new fortune
 const getNewFortune = async () => {
@@ -31,6 +31,13 @@ const getAllFortunes = async () => {
     return fortunes  
 }
 
+//add new fortune
+const addNewFortune = async (fortuneData) => {
+    var newFortune = new fortunesModel(fortuneData);
+    await newFortune.save();
+}
+
 //exports
 exports.getNewFortune  = getNewFortune;
 exports.getAllFortunes = getAllFortunes;
+exports.addNewFortune  = addNewFortune;
