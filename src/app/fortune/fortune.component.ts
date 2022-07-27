@@ -18,6 +18,10 @@ export class FortuneComponent implements OnInit {
     this.fortuneservice.getNewFortune()
       .subscribe((data: any) => this.fortunes = data);
   }
+
+  //addNewFortune(){
+  //  this.fortuneservice.addNewFortune();
+  //}
   
   ngOnInit(){
     this.showNewFortune();

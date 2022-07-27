@@ -6,12 +6,14 @@ import { HttpClientModule} from '@angular/common/http';
 import { FortuneComponent } from './fortune/fortune.component';
 import { FortuneService } from './fortune/fortune.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FortuneComponent,
-    NavbarComponent
+    NavbarComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
