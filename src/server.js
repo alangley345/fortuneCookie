@@ -14,7 +14,6 @@ var apiRouter = require('./routes/apiRoute');
 var app = express();
 
 // view engine setup
-app.use(express.static(__dirname + '/dist/prod'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
@@ -23,8 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //routes
-app.use('/', indexRouter);
 app.use('/api', apiRouter);
+app.all(express.static(__dirname + '/dist/prod'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
