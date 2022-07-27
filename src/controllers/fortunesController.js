@@ -14,13 +14,17 @@ const getNewFortune = async (req, res, next) => {
 //all fortunes
 const getAllFortunes = async (req, res, next) => {
     var fortunes = await fortunesModel.getAllFortunes();
-     
+    try {
+        res.status(200).json(fortunes);
+    }
+    catch {
+        res.status(500)
+    }    
 }
 
 //add new fortune
 const addNewFortune = async (req, res) => {
     await fortunesModel.addNewFortune(req);
-    
 }
 
 //exports

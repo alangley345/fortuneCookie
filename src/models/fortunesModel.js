@@ -23,7 +23,7 @@ const getNewFortune = async () => {
     var count   = await fortunesModel.count();
     var random  = Math.floor(Math.random()*count);
     var fortune = await fortunesModel.findOne().skip(random).lean();
-    return fortune  
+    return fortune   
 }
 
 //get all fortunes in DB (Eventually need to paginate this)
@@ -34,8 +34,11 @@ const getAllFortunes = async () => {
 
 //add new fortune
 const addNewFortune = async (req, res) => {
-    var newRequest = new fortunesModel(req);
-    await newRequest.save();
+    var newFortune = fortunesModel(req);
+    newFortune.save(function (err, post) {
+        if (err) return next(err);
+        res.json(post);
+    });
 }
 
 //exports

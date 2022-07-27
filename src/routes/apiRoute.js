@@ -9,14 +9,18 @@ router.get("/fortunes/new", fortunesController.getNewFortune);
 router.get("/fortunes/all", fortunesController.getAllFortunes);
 
 var fortuneData = {
-    content: "People in glass houses shouldn't throw stones.",
+    content: "You have to climb a hill before coasting down.",
     contributor: "Aaron Langley"
 };
 
 // POST new fortune
-router.post("/fortunes/add", fortunesController.addNewFortune);
+router.post("/fortunes/add", async (req,res) => {
+    fortunesController.addNewFortune(fortuneData);
+}) ;
 
 // POST new fortune
-router.post("/users/add", usersController.addNewUser);
+router.post("/users/add", function(req, res) {
+    usersController.addNewUser();
+});
 
 module.exports = router;
