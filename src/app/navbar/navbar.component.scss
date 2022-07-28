@@ -9,3 +9,14 @@ li{
     display: block;
     padding: 8px;
 }
+
+li:hover{
+    background-color: rgba(26, 24, 24, 0.25);
+    float: left;
+    display: block;
+    padding: 8px;
+}
+
+#navbar{
+    background-color: rgba(0, 0, 0, 0.035);
+}
