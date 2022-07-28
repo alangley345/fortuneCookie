@@ -1,22 +1,11 @@
 <div>
-    <div id="title">
-        <h1> 
-          Fortune Cookie Simulator
-        </h1>
-      </div>
-      <div id="tag-line">
-        <h3>
-          It's like a trip to the chinese buffet without the gastroenteritis
-        </h3>
-      </div>
-      <div id = fortune-header>
-        Your fortune:
-      </div >
-    <p>{{fortunes.content}}</p>
-    <button (click)="showNewFortune()" id="new-fortune-button">
+    <div id="fortune">
+      <p>{{fortunes.content}}</p>
+      <button (click)="showNewFortune()" id="new-fortune-button">
         New Fortune?
-    </button>
-    <button id="add-fortune-button">
+      </button>
+      <button id="add-fortune-button">
         Want to Add Your Own Fortune?
-    </button>
+      </button>
+    </div>
 </div>
