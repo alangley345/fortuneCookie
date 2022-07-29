@@ -7,13 +7,15 @@ import { FortuneComponent } from './fortune/fortune.component';
 import { FortuneService } from './fortune/fortune.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AccountComponent } from './account/account.component';
+import { ContributeComponent } from './contribute/contribute.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FortuneComponent,
     NavbarComponent,
-    AccountComponent
+    AccountComponent,
+    ContributeComponent
   ],
   imports: [
     BrowserModule,
