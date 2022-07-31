@@ -13,8 +13,4 @@ export class FortuneService {
   getNewFortune(){
     return this.http.get<any>(this.apiURL+'new');
   }
-
-  //addNewFortune(){
-  //  return this.http.post<any>(this.apiURL+'add',);
-  //}
 }
